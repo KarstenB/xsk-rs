@@ -123,7 +123,7 @@
 use cfg_if::cfg_if;
 
 cfg_if! {
-    if #[cfg(all(target_pointer_width = "64", target_family = "unix"))] {
+    if #[cfg(all(target_family = "unix"))] {
         pub mod umem;
         pub use umem::{frame::FrameDesc, CompQueue, FillQueue, Umem};
 
@@ -134,15 +134,5 @@ cfg_if! {
 
         mod ring;
         mod util;
-
-        #[cfg(test)]
-        mod tests {
-            use std::mem;
-
-            #[test]
-            fn ensure_usize_and_u64_are_same_size() {
-                assert_eq!(mem::size_of::<usize>(), mem::size_of::<u64>());
-            }
-        }
     }
 }
